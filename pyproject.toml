@@ -12,9 +12,11 @@ dependencies = [
     "asyncio",
     "exa-py",
     "python-dotenv",
-    "mcp",
+    "fastmcp>=2.0.0",
     "groq",
     "openai",
+    "azure-ai-inference",
+    "aiohttp",
 ]
 
 [project.optional-dependencies]
