@@ -12,7 +12,7 @@ startCommand:
       llmProvider:
         type: string
         default: deepseek
-        description: "LLM Provider. Options: deepseek, groq, openrouter."
+        description: "LLM Provider. Options: deepseek, groq, openrouter, azure."
       deepseekApiKey:
         type: string
         description: API key for DeepSeek. Required if llmProvider is 'deepseek'.
@@ -24,6 +24,14 @@ startCommand:
         type: string
         default: ""
         description: API key for OpenRouter. Required if llmProvider is 'openrouter'.
+      azureOpenaiApiKey:
+        type: string
+        default: ""
+        description: API key for Azure OpenAI. Required if llmProvider is 'azure'.
+      azureOpenaiEndpoint:
+        type: string
+        default: ""
+        description: Azure OpenAI endpoint URL. Required if llmProvider is 'azure'.
       exaApiKey:
         type: string
         default: ""
@@ -39,6 +47,8 @@ startCommand:
         DEEPSEEK_API_KEY: config.deepseekApiKey,
         GROQ_API_KEY: config.groqApiKey,
         OPENROUTER_API_KEY: config.openrouterApiKey,
+        AZURE_OPENAI_API_KEY: config.azureOpenaiApiKey,
+        AZURE_OPENAI_ENDPOINT: config.azureOpenaiEndpoint,
         EXA_API_KEY: config.exaApiKey
       }
     })
@@ -47,4 +57,6 @@ startCommand:
     deepseekApiKey: your_deepseek_api_key
     groqApiKey: ""
     openrouterApiKey: ""
+    azureOpenaiApiKey: ""
+    azureOpenaiEndpoint: ""
     exaApiKey: your_exa_api_key

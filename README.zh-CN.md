@@ -67,6 +67,7 @@
     - **Groq:** 需要 `GROQ_API_KEY`。
     - **DeepSeek:** 需要 `DEEPSEEK_API_KEY`。
     - **OpenRouter:** 需要 `OPENROUTER_API_KEY`。
+    - **Azure OpenAI:** 需要 `AZURE_OPENAI_API_KEY` 和 `AZURE_OPENAI_ENDPOINT`。
     - 使用 `LLM_PROVIDER` 环境变量配置所需的提供商（默认为 `deepseek`）。
 - Exa API 密钥（仅当使用研究员智能体的功能时才需要）
     - 通过 `EXA_API_KEY` 环境变量设置。
@@ -87,10 +88,12 @@
         "mcp-server-mas-sequential-thinking" // 或指向主脚本的路径, 例如 "main.py"
       ],
       "env": {
-        "LLM_PROVIDER": "deepseek", // 或 "groq", "openrouter"
+        "LLM_PROVIDER": "deepseek", // 或 "groq", "openrouter", "azure"
         // "GROQ_API_KEY": "你的_groq_api_密钥", // 仅当 LLM_PROVIDER="groq" 时需要
         "DEEPSEEK_API_KEY": "你的_deepseek_api_密钥", // 默认提供商
         // "OPENROUTER_API_KEY": "你的_openrouter_api_密钥", // 仅当 LLM_PROVIDER="openrouter" 时需要
+        // "AZURE_OPENAI_API_KEY": "你的_azure_api_密钥", // 仅当 LLM_PROVIDER="azure" 时需要
+        // "AZURE_OPENAI_ENDPOINT": "https://your-resource.openai.azure.com/", // 仅当 LLM_PROVIDER="azure" 时需要
         "DEEPSEEK_BASE_URL": "你的_base_url_如果需要", // 可选：如果为 DeepSeek 使用自定义端点
         "EXA_API_KEY": "你的_exa_api_密钥" // 仅当使用 Exa 时需要
       }
@@ -111,13 +114,15 @@
     在项目根目录创建一个 `.env` 文件或直接在您的环境中导出变量：
     ```dotenv
     # --- LLM 配置 ---
-    # 选择 LLM 提供商: "deepseek" (默认), "groq", 或 "openrouter"
+    # 选择 LLM 提供商: "deepseek" (默认), "groq", "openrouter", 或 "azure"
     LLM_PROVIDER="deepseek"
 
     # 提供所选提供商的 API 密钥:
     # GROQ_API_KEY="你的_groq_api_密钥"
     DEEPSEEK_API_KEY="你的_deepseek_api_密钥"
     # OPENROUTER_API_KEY="你的_openrouter_api_密钥"
+    # AZURE_OPENAI_API_KEY="你的_azure_api_密钥"
+    # AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
 
     # 可选: 基础 URL 覆盖 (例如, 用于自定义 DeepSeek 端点)
     # DEEPSEEK_BASE_URL="你的_base_url_如果需要"
@@ -133,6 +138,9 @@
     # OpenRouter 示例:
     # OPENROUTER_TEAM_MODEL_ID="deepseek/deepseek-r1" # 示例，按需调整
     # OPENROUTER_AGENT_MODEL_ID="deepseek/deepseek-chat" # 示例，按需调整
+    # Azure OpenAI 示例:
+    # AZURE_TEAM_MODEL_ID="gpt-4" # Azure 中的部署名称
+    # AZURE_AGENT_MODEL_ID="gpt-4" # Azure 中的部署名称
 
     # --- 外部工具 ---
     # 仅当研究员智能体被使用且需要 Exa 时才必需

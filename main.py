@@ -10,6 +10,7 @@ from agno.models.base import Model
 from agno.models.deepseek import DeepSeek
 from agno.models.groq import Groq
 from agno.models.openrouter import OpenRouter
+from agno.models.azure import AzureOpenAI
 from agno.team.team import Team
 from agno.tools.exa import ExaTools
 from agno.tools.thinking import ThinkingTools
@@ -292,6 +293,11 @@ def get_model_config() -> tuple[Type[Model], str, str]:
         team_model_id = os.environ.get("OPENROUTER_TEAM_MODEL_ID", "deepseek/deepseek-chat-v3-0324")
         agent_model_id = os.environ.get("OPENROUTER_AGENT_MODEL_ID", "deepseek/deepseek-r1")
         logger.info(f"Using OpenRouter: Team Model='{team_model_id}', Agent Model='{agent_model_id}'")
+    elif provider == "azure":
+        ModelClass = AzureOpenAI
+        team_model_id = os.environ.get("AZURE_TEAM_MODEL_ID", "gpt-4")
+        agent_model_id = os.environ.get("AZURE_AGENT_MODEL_ID", "gpt-4")
+        logger.info(f"Using Azure OpenAI: Team Model='{team_model_id}', Agent Model='{agent_model_id}'")
     else:
         logger.error(f"Unsupported LLM_PROVIDER: {provider}. Defaulting to DeepSeek.")
         ModelClass = DeepSeek
@@ -844,6 +850,11 @@ def check_environment_variables():
         api_key_var = "GROQ_API_KEY"
     elif provider == "openrouter":
         api_key_var = "OPENROUTER_API_KEY"
+    elif provider == "azure":
+        api_key_var = "AZURE_OPENAI_API_KEY"
+        # Azure OpenAI also requires endpoint
+        if "AZURE_OPENAI_ENDPOINT" not in os.environ:
+            logger.warning("AZURE_OPENAI_ENDPOINT environment variable not found. Azure OpenAI initialization will fail.")
     if api_key_var and api_key_var not in os.environ:
         logger.warning(f"{api_key_var} environment variable not found. Model initialization for '{provider}' might fail.")
     try:
